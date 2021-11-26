@@ -1,0 +1,54 @@
+{
+  "name": "pokeapi-ddd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "USE_CJS_MODULES=true npx babel --presets=@web/domestika ./src --out-dir ./cjs",
+    "build:esm": "npx babel --presets=@web/domestika ./src --out-dir ./lib",
+    "phoenix": "rm -Rf node_modules package-lock.json && npm install --cache=/tmp/$(date +\"%T\") --no-fund --no-audit --ignore-scripts",
+    "prepare": "npm run build",
+    "test": "npm run test:server && npm run test:browser",
+    "test:browser": "karma start ./karma.config.js",
+    "test:browser:watch": "npm run test:browser -- --auto-watch --no-single-run",
+    "test:server": "USE_CJS_MODULES=true APP_ENV=test npx mocha --require @web/tester/register.js test/server/**/*Spec.js",
+    "test:server:watch": "APP_ENV=test npm run test:server -- --watch --inspect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosvillu/pokeapi-ddd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlosvillu/pokeapi-ddd/issues"
+  },
+  "homepage": "https://github.com/carlosvillu/pokeapi-ddd#readme",
+  "devDependencies": {
+    "@web/bundler": "^1.42.0",
+    "@web/tester": "^1.33.0",
+    "@babel/cli": "7.13.0",
+    "karma": "^6.3.9"
+  },
+  "publishConfig": {
+    "@web:registry": "https://gitlab.domestika.org/api/v4/projects/18/packages/npm/"
+  },
+  "dependencies": {
+    "@web/decorators": "^1.19.0",
+    "@web/js": "^1.19.0",
+    "@web/linter": "^1.28.0",
+    "algoliasearch": "^4.9.2",
+    "amplitude-js": "^8.3.1",
+    "axios": "0.21.1",
+    "form-data": "^4.0.0",
+    "js-cookie": "^2.2.1"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/@web/linter/eslintrc.js"
+  },
+  "stylelint": {
+    "extends": "./packages/styles/stylelint.config.js"
+  }
+}
